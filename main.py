@@ -1,30 +1,31 @@
 #!/usr/bin/env python3
-import os
-import sys
-import ssl
 import json
-import time
 import logging
+import os
+import ssl
 import subprocess
+import sys
 import urllib.request
-from typing import List, Dict, Tuple
+from pathlib import Path
+from typing import Dict, List, Tuple
+
 import coloredlogs
+
 import IptablesManager
+
 # ───────────────────────────
 # Configuration
 # ───────────────────────────
-LAPI_URL       = os.getenv("LAPI_URL")
-CA_CERT        = os.getenv("CA_CERT", "/secrets/ca.crt")
-CLIENT_CERT    = os.getenv("CLIENT_CERT", "/secrets/client.crt")
-CLIENT_KEY     = os.getenv("CLIENT_KEY", "/secrets/client.key")
-ROUTER         = os.getenv("ROUTER")
-SSH_PORT       = os.getenv("SSH_PORT", "22")
-SSH_KEY        = os.getenv("SSH_KEY", "/secrets/ssh_key")
-
-CHAIN          = os.getenv("CHAIN", "CROWDSEC_BLOCK")
-MAX_IPS        = int(os.getenv("MAX_IPS", "400"))
-SCOPE_FILTER   = os.getenv("SCOPE", "ip")
-
+LAPI_URL    = os.getenv("LAPI_URL",str)
+CA_CERT: Path     = os.getenv("CA_CERT", "/secrets/ca.crt",Path)
+CLIENT_CERT      = os.getenv("CLIENT_CERT", "/secrets/client.crt",Path)
+CLIENT_KEY       = os.getenv("CLIENT_KEY", "/secrets/client.key")
+ROUTER: str      = os.getenv("ROUTER",None)
+SSH_PORT: int    = os.getenv("SSH_PORT", "22")
+SSH_KEY          = os.getenv("SSH_KEY", "/secrets/ssh_key")
+CHAIN            = os.getenv("CHAIN", "CROWDSEC_BLOCK")
+MAX_IPS: int     = int(os.getenv("MAX_IPS", "400"))
+SCOPE_FILTER     = os.getenv("SCOPE", "ip")
 WHITELIST_CSV  = os.getenv("WHITELIST", "")
 WHITELIST_FILE = os.getenv("WHITELIST_FILE", "/config/whitelist.txt")
 
@@ -62,7 +63,8 @@ def build_ssl_ctx() -> ssl.SSLContext:
     return ctx
 
 def fetch_decisions(ctx: ssl.SSLContext) -> List[Dict]:
-    url = f"{LAPI_URL.rstrip('/')}/v1/decisions/stream?startup=true&scope={SCOPE_FILTER}"
+    base = (LAPI_URL or "").rstrip('/')
+    url = f"{base}/v1/decisions/stream?startup=true&scope={SCOPE_FILTER}"
     req = urllib.request.Request(url)
     try:
         with urllib.request.urlopen(req, context=ctx, timeout=20) as resp:
@@ -109,7 +111,7 @@ def run_remote(script: str) -> int:
 def extract_ips(decisions: List[Dict], whitelist: set) -> List[Tuple[str, Dict]]:
     out = []
     for d in decisions:
-        if (d.get("scope") or "").lower() != "ip": 
+        if (d.get("scope") or "").lower() != "ip":
             continue
         val = (d.get("value") or "").strip()
         if not val or "/" in val or "-" in val:

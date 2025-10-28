@@ -19,18 +19,6 @@ humanfriendly = ">=9.1"
 cron = ["capturer (>=2.4)"]
 
 [[package]]
-name = "colorlogs"
-version = "0.1"
-description = "Custom logger allows colored logs"
-optional = false
-python-versions = "*"
-groups = ["main"]
-files = [
-    {file = "colorlogs-0.1-py3-none-any.whl", hash = "sha256:33c93fd7dc07c3018a87f99eca8679febaf64a7d4691cc8d4413fa5ddec69270"},
-    {file = "colorlogs-0.1.tar.gz", hash = "sha256:e595aa14dce2aa17c53595f9d00fa07b7acc2e4085f24b4a8537a5fb72ef9bea"},
-]
-
-[[package]]
 name = "humanfriendly"
 version = "10.0"
 description = "Human friendly output for text interfaces using Python"
@@ -79,4 +67,4 @@ cli = ["click (>=5.0)"]
 [metadata]
 lock-version = "2.1"
 python-versions = ">=3.9"
-content-hash = "8ee0cf3dbfbbda0f348a139505e9f863f8c7e81ed66cbbf1262c3776fd32ea67"
+content-hash = "f073a6dc4888233374e64eae49c9325fbaa69417a8147bf9fab0e8ffd7621d45"
