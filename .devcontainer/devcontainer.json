@@ -1,0 +1,14 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/anaconda
+{
+	"$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+	"name": "devContainer (Python 3)",
+	"image": "ghcr.io/usma0118/containers/devcontainers/base:alpine-latest",
+
+    "remoteUser": "vscode",
+    "containerUser": "vscode",
+    "updateRemoteUserUID": true
+    ,"mounts": [
+      "source=bashhistory,target=/home/vscode/.history,type=volume"
+    ]
+}

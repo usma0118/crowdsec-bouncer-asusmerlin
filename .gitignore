@@ -1,0 +1,12 @@
+# Editors
+.vscode/
+# Trash
+.DS_Store
+*.db
+*.db-journal
+*.example.*
+cache/
+media/
+entries.db
+*.egg-info/
+.mypy_cache/

@@ -1,0 +1,39 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0  # Use the latest stable version
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-yaml
+      - id: check-merge-conflict
+
+  # - repo: https://github.com/psf/black
+  #   rev: 23.9.1  # Use the latest stable version of Black
+  #   hooks:
+  #     - id: black
+  #       language_version: python3  # Adjust according to your Python version
+
+  - repo: https://github.com/PyCQA/isort
+    rev: 6.0.1  # Use the latest stable version of isort
+    hooks:
+      - id: isort
+        name: isort (python)
+        language_version: python3
+
+  # - repo: https://github.com/pre-commit/mirrors-mypy
+  #   rev: v1.5.1  # Use the latest stable version of mypy
+  #   hooks:
+  #     - id: mypy
+  #       args: ["--ignore-missing-imports"]
+  #       language_version: python3
+
+  - repo: https://github.com/pre-commit/pygrep-hooks
+    rev: v1.10.0
+    hooks:
+      - id: python-check-blanket-noqa
+
+  - repo: https://github.com/codespell-project/codespell
+    rev: v2.4.1  # Use the latest stable version of codespell
+    hooks:
+      - id: codespell
+        args: ["--ignore-words-list", "analyse,colour"]  # Customize as needed
